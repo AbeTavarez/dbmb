@@ -1,6 +1,7 @@
 "use client";
 import { Member } from "@/types";
 import { ChangeEvent, useState } from "react";
+import { editMemberAction } from "@/actions";
 
 interface MemberEditFormProps {
   member: Member;
@@ -9,11 +10,13 @@ interface MemberEditFormProps {
 export default function MemberEditForm(props: MemberEditFormProps) {
   const [member, setMember] = useState(props.member);
 
+  //   HANDLE CHANGE
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setMember({...member, [e.target.name]: e.target.value});
-  }
+    setMember({ ...member, [e.target.name]: e.target.value });
+  };
+
   return (
-    <form>
+    <form action={editMemberAction.bind(null, member)}>
       <div className="flex flex-col gap-3 max-w-xl mx-auto bg-slate-300 p-5 rounded">
         <h3 className="font-bold m-3">Edit Member</h3>
 
@@ -41,7 +44,10 @@ export default function MemberEditForm(props: MemberEditFormProps) {
           />
         </div>
 
-        <button type="submit" className="rounded bg-green-500 p-2 w-full text-white font-bold">
+        <button
+          type="submit"
+          className="rounded bg-green-500 p-2 w-full text-white font-bold"
+        >
           Update
         </button>
       </div>

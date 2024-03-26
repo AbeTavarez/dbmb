@@ -1,10 +1,9 @@
-import { members } from "@/db";
 import dbClient from "@/db/mongodb";
 import { ObjectId } from "mongodb";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
-
+import { notFound } from "next/navigation";
+import { deleteMember } from "@/actions";
 interface MemberPageProps {
   params: {
     id: string;
@@ -25,14 +24,7 @@ export default async function MemberPage(props: MemberPageProps) {
     return notFound();
   }
 
-  async function deleteMember(id: ObjectId) {
-    "use server"
-    await dbClient
-      .db("next-members")
-      .collection("members")
-      .findOneAndDelete({ _id: new ObjectId(props.params.id) });
-      redirect('/members');
-  };
+  
 
   return (
     <div className="container mx-auto bg-blue-700">
